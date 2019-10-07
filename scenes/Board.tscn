@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scripts/Board.gd" type="Script" id=1]
+[ext_resource path="res://scenes/Cell.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/Spawner.tscn" type="PackedScene" id=3]
+
+[node name="Board" type="Node2D"]
+position = Vector2( 8.79041, -1.75812 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+Cell_scene = ExtResource( 2 )
+width = 10
+height = 10
+offset = 2
+cell_size = 64
+
+[node name="Spawner" parent="." instance=ExtResource( 3 )]
+position = Vector2( 0, 0 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.51
+autostart = true
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

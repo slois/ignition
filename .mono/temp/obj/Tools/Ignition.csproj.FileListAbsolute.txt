@@ -1,0 +1,6 @@
+/home/slois/workspace/godot_projects/Ignition/.mono/temp/obj/Tools/Ignition.csprojAssemblyReference.cache
+/home/slois/workspace/godot_projects/Ignition/.mono/temp/obj/Tools/Ignition.csproj.CoreCompileInputs.cache
+/home/slois/workspace/godot_projects/Ignition/.mono/temp/bin/Tools/Ignition.dll
+/home/slois/workspace/godot_projects/Ignition/.mono/temp/bin/Tools/Ignition.pdb
+/home/slois/workspace/godot_projects/Ignition/.mono/temp/obj/Tools/Ignition.dll
+/home/slois/workspace/godot_projects/Ignition/.mono/temp/obj/Tools/Ignition.pdb
