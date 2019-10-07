@@ -9,8 +9,6 @@ const RIGHT = Vector2(1, 0)
 const LEFT = Vector2(-1, 0)
 const DOWN = Vector2(0, 1)
 
-
-
 var velocity = Vector2()
 var grid
 var target_pos = Vector2()
@@ -22,22 +20,22 @@ func _ready() -> void:
 	grid = get_parent()
 	set_physics_process(true)
 
-
 func _physics_process(delta):
 	direction = Vector2()
 	
-	if Input.is_action_pressed("ui_up"):
-		direction.y = -1
-	elif Input.is_action_pressed("ui_right"):
-		direction.x = 1
-	elif Input.is_action_pressed("ui_left"):
-		direction.x = -1
-	elif Input.is_action_pressed("ui_down"):
-		direction.y = 1
-	else:
-		pass
+#	if Input.is_action_pressed("ui_up"):
+#		direction.y = -1
+#	elif Input.is_action_pressed("ui_right"):
+#		direction.x = 1
+#	elif Input.is_action_pressed("ui_left"):
+#		direction.x = -1
+#	elif Input.is_action_pressed("ui_down"):
+#		direction.y = 1
+#	else:
+#		pass
 	
-	
+	direction.y = 1
+		
 	if not is_moving and direction != Vector2():
 		target_direction = direction
 		target_pos = grid.update_child_pos(self)
