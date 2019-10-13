@@ -1,21 +1,18 @@
 extends Node2D
 
+signal spawned
+
 var rnd = RandomNumberGenerator.new()
-onready var factory = preload("res://scenes/BlockFactory.tscn").instance()
+
+export (Array, PackedScene) var spawnee
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	rnd.randomize()
 	
-func spawn_block():
-	var block = factory.generate_block(rnd.randi_range(0, factory.get_child_count()-1))
-	block.position = $Position.position
-	return block
-
-func move_to(pos):
-	$Position.position = pos
-
-func random_position(x_min, x_max):
-	var rndpos = rnd.randf_range(x_min, x_max)
-	move_to(Vector2(rndpos, $Position.position.y))
-
+func spawn():
+	var index = rnd.randi_range(0, spawnee.size()-1)
+	var instance = spawnee[index].instance()
+	instance.type = index
+	emit_signal("spawned", instance)
+	return instance

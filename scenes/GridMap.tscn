@@ -1,0 +1,36 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://scripts/Board.gd" type="Script" id=1]
+[ext_resource path="res://scripts/GridMap.gd" type="Script" id=2]
+[ext_resource path="res://scenes/Spawner2D.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/Blocks/BlueBlock.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/Blocks/RedBlock.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/Blocks/OrangeBlock.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/Blocks/PurpleBlock.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/Blocks/GreenBlock.tscn" type="PackedScene" id=8]
+
+[node name="Board" type="Node2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+cell_function = 2
+match_length = 3
+match_checking = true
+
+[node name="GridMap" type="Node2D" parent="."]
+script = ExtResource( 2 )
+grid_size = Vector2( 9, 9 )
+cell_size = Vector2( 64, 64 )
+cell_space = 4.0
+horizontal_margin = 10.0
+vertical_margin = 10.0
+centered = false
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="Factory" parent="." instance=ExtResource( 3 )]
+position = Vector2( 0, 0 )
+spawnee = [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

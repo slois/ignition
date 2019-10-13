@@ -1,20 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://scripts/Grid.gd" type="Script" id=1]
-[ext_resource path="res://scenes/Spawner.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/Board.tscn" type="PackedScene" id=1]
 
 [node name="Main" type="Node"]
 
-[node name="MyBoard" type="TileMap" parent="."]
-position = Vector2( 32.5259, 39.3136 )
-cell_y_sort = true
-format = 1
-script = ExtResource( 1 )
+[node name="MyBoard" parent="." instance=ExtResource( 1 )]
+cell_size = Vector2( 66, 66 )
 
-[node name="Spawner" parent="MyBoard" instance=ExtResource( 2 )]
-position = Vector2( -39.6172, -171.749 )
-
-[node name="Timer" type="Timer" parent="MyBoard"]
-wait_time = 0.5
-autostart = true
-[connection signal="timeout" from="MyBoard/Timer" to="MyBoard" method="_on_Timer_timeout"]
+[editable path="MyBoard"]
