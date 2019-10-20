@@ -1,10 +1,122 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://scenes/Board.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/Board.gd" type="Script" id=1]
+[ext_resource path="res://scripts/GridMap.gd" type="Script" id=2]
+[ext_resource path="res://scenes/Spawner2D.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/Blocks/RedBlock.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/Blocks/BlueBlock.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/Blocks/OrangeBlock.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/Blocks/PurpleBlock.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/Blocks/GreenBlock.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scripts/Bar.gd" type="Script" id=9]
+[ext_resource path="res://art/UI/label_bg.png" type="Texture" id=10]
+[ext_resource path="res://art/fonts/Comfortaa-Bold.ttf" type="DynamicFontData" id=11]
+[ext_resource path="res://art/UI/bar_title.png" type="Texture" id=12]
+[ext_resource path="res://art/UI/lifebar_bg.png" type="Texture" id=13]
+[ext_resource path="res://art/UI/lifebar_fill.png" type="Texture" id=14]
 
-[node name="Main" type="Node"]
+[sub_resource type="DynamicFont" id=1]
+size = 24
+outline_size = 1
+outline_color = Color( 0.635294, 0.603922, 0.603922, 1 )
+use_filter = true
+extra_spacing_bottom = 10
+font_data = ExtResource( 11 )
 
-[node name="MyBoard" parent="." instance=ExtResource( 1 )]
-cell_size = Vector2( 66, 66 )
+[node name="Node" type="Node"]
 
-[editable path="MyBoard"]
+[node name="Board" type="Node2D" parent="."]
+position = Vector2( 500, 500 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+init_mode = 1
+fill_mode = 2
+block_movement = false
+match_length = 3
+match_checking = true
+time_trigger = false
+
+[node name="GridMap" type="Node2D" parent="Board"]
+script = ExtResource( 2 )
+grid_size = Vector2( 9, 9 )
+cell_size = Vector2( 64, 64 )
+cell_space = 5.0
+horizontal_margin = 5.0
+vertical_margin = 5.0
+centered = true
+visualize = true
+
+[node name="Timer" type="Timer" parent="Board"]
+wait_time = 0.5
+
+[node name="Factory" parent="Board" instance=ExtResource( 3 )]
+position = Vector2( 0, 0 )
+spawnee = [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ]
+
+[node name="GUI" type="MarginContainer" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -88.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 1004.0
+margin_bottom = 73.0
+
+[node name="Bars" type="VBoxContainer" parent="GUI/HBoxContainer"]
+margin_right = 504.0
+margin_bottom = 53.0
+
+[node name="Bar" type="HBoxContainer" parent="GUI/HBoxContainer/Bars"]
+margin_right = 504.0
+margin_bottom = 53.0
+script = ExtResource( 9 )
+
+[node name="Count" type="MarginContainer" parent="GUI/HBoxContainer/Bars/Bar"]
+editor/display_folded = true
+margin_right = 100.0
+margin_bottom = 53.0
+
+[node name="Background" type="NinePatchRect" parent="GUI/HBoxContainer/Bars/Bar/Count"]
+margin_right = 100.0
+margin_bottom = 53.0
+rect_min_size = Vector2( 100, 53 )
+texture = ExtResource( 10 )
+
+[node name="Number" type="Label" parent="GUI/HBoxContainer/Bars/Bar/Count/Background"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -5.0
+custom_fonts/font = SubResource( 1 )
+text = "0"
+align = 2
+valign = 2
+
+[node name="Title" type="TextureRect" parent="GUI/HBoxContainer/Bars/Bar/Count/Background"]
+margin_right = 70.0
+margin_bottom = 48.0
+texture = ExtResource( 12 )
+stretch_mode = 4
+
+[node name="Gauge" type="TextureProgress" parent="GUI/HBoxContainer/Bars/Bar"]
+margin_left = 108.0
+margin_right = 504.0
+margin_bottom = 53.0
+value = 50.0
+texture_under = ExtResource( 13 )
+texture_progress = ExtResource( 14 )
+
+[node name="Counters" type="HBoxContainer" parent="GUI/HBoxContainer"]
+margin_left = 512.0
+margin_right = 512.0
+margin_bottom = 53.0
+[connection signal="grid_ready" from="Board/GridMap" to="Board" method="_on_GridMap_grid_ready"]
+[connection signal="timeout" from="Board/Timer" to="Board" method="_on_Timer_timeout"]

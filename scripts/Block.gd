@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 var speed = 0
-const MAX_SPEED = 300
+const MAX_SPEED = 600
 var velocity = Vector2()
 
 var grid
@@ -48,3 +48,7 @@ func _physics_process(delta):
 				
 		move_and_collide(velocity)
 
+func _on_Block_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
+		#emit_signal("clicked", message)
+		print("Selected")
